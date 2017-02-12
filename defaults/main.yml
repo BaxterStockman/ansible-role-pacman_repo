@@ -1,0 +1,13 @@
+---
+# defaults file for ansible-role-pacman_repo
+
+pacman_repo_root: '/var/cache/{{ pacman_repo_name }}'
+pacman_repo_user: build
+pacman_repo_group: build
+pacman_repo_port: 80
+pacman_repo_environment_file: '/etc/conf.d/{{ pacman_repo_name }}'
+pacman_repo_config_file: '/etc/pacman.d/{{ pacman_repo_name }}.conf'
+pacman_repo_service: '{{ pacman_repo_name }}.service'
+pacman_repo_aursync_service: 'aursync@.service'
+pacman_repo_aursync_timer: 'aursync@.timer'
+pacman_repo_calendar_event_expr: daily

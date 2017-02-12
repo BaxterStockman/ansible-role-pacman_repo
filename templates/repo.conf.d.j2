@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+
+# Configuration file for darkhttpd-based pacman repository
+
+REPO_ROOT={{ pacman_repo_root }}
+REPO_UID={{ pacman_repo_user  }}
+REPO_GID={{ pacman_repo_group  }}
+REPO_PORT={{ pacman_repo_port  }}

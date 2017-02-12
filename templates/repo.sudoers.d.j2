@@ -1,0 +1,3 @@
+{{ pacman_repo_user }} {{ inventory_hostname | default("ALL") }} = (root) NOPASSWD: SETENV: /usr/bin/makechrootpkg
+{{ pacman_repo_user }} {{ inventory_hostname | default("ALL") }} = (root) NOPASSWD: /usr/bin/arch-nspawn
+{{ pacman_repo_user }} {{ inventory_hostname | default("ALL") }} = (root) NOPASSWD: /usr/bin/pacman

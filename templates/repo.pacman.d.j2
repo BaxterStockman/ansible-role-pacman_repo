@@ -1,0 +1,7 @@
+[options]
+CacheDir = {{ pacman_repo_root }}
+CleanMethod = KeepCurrent
+
+[{{ pacman_repo_name }}]
+SigLevel = Optional TrustAll
+Server = file://{{ pacman_repo_root }}

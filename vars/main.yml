@@ -1,0 +1,3 @@
+---
+# vars file for ansible-role-nzbhydra
+nzbhydra_systemd_custom_config: /etc/systemd/system/nzbhydra.service.d/custom.conf

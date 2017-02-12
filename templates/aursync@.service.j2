@@ -1,0 +1,11 @@
+[Unit]
+Description=Synchronize the %I repo with AUR
+
+[Service]
+User={{ pacman_repo_user }}
+Group={{ pacman_repo_group }}
+Type=oneshot
+ExecStart=/usr/bin/aursync --update --no-view -n --keep --repo %I
+
+[Install]
+WantedBy=multi-user.target

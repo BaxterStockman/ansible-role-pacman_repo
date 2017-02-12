@@ -1,0 +1,62 @@
+---
+# tasks file for ansible-role-pacman_repo
+- name: main | ensure repo name is defined
+  fail:
+    msg: 'You must define a name for your repository'
+  when: pacman_repo_name is not defined
+
+- name: main | create repo environment file
+  file:
+    path: '{{ pacman_repo_environment_file | dirname }}'
+    state: directory
+
+- name: main | create repo environment file
+  template:
+    src: repo.conf.d.j2
+    dest: '{{ pacman_repo_environment_file }}'
+
+- name: main | create systemd configuration directory
+  file:
+    path: /etc/systemd/system
+    state: directory
+
+- name: main | template systemd configuration files
+  template:
+    src: '{{ pacman_repo_systemd_spec.src }}'
+    dest: '/etc/systemd/system/{{ pacman_repo_systemd_spec.dest }}'
+  loop_control:
+    loop_var: pacman_repo_systemd_spec
+  with_items:
+    - src: repo.service.j2
+      dest: '{{ pacman_repo_service }}'
+    - src: aursync@.service.j2
+      dest: '{{ pacman_repo_aursync_service }}'
+    - src: aursync@.timer.j2
+      dest: '{{ pacman_repo_aursync_timer }}'
+
+- name: main | create pacman repo group
+  group:
+    name: '{{ pacman_repo_group }}'
+    state: present
+
+- name: main | create pacman repo user
+  user:
+    name: '{{ pacman_repo_user }}'
+    group: '{{ pacman_repo_group }}'
+    shell: '/sbin/nologin'
+    state: present
+
+- name: main | lock pacman repo user
+  command: usermod --lock '{{ pacman_repo_user }}'
+  changed_when: no
+
+- name: main | create sudoers file
+  template:
+    src: 'repo.sudoers.d.j2'
+    dest: '/etc/sudoers.d/{{ pacman_repo_user }}'
+    validate: 'visudo -cf %s'
+
+- name: main | create sudoers file
+  template:
+    src: 'repo.pacman.d.j2'
+    dest: '{{ pacman_repo_config_file }}'

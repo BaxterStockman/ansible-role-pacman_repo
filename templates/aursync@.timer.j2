@@ -1,0 +1,9 @@
+[Unit]
+Description=Scheduled synchronization of %I repo with AUR
+
+[Timer]
+OnCalendar={{ pacman_repo_calendar_event_expr }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

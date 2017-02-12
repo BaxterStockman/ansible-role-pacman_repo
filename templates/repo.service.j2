@@ -1,0 +1,10 @@
+[Unit]
+Description=Pacman Repo using Darkhttpd Webserver
+
+[Service]
+Type=simple
+EnvironmentFile={{ pacman_repo_environment_file }}
+ExecStart=/usr/bin/darkhttpd $REPO_ROOT --uid $REPO_UID --gid $REPO_GID --chroot --mimetypes /etc/conf.d/mimetypes --port $REPO_PORT --no-server-id
+
+[Install]
+WantedBy=multi-user.target
